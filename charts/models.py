@@ -6,6 +6,8 @@ class Chart(models.Model):
 	ownerSource = models.CharField(max_length=200)
 	ownerId = models.CharField(max_length=200)
 	name = models.CharField(max_length=200)
+	symbol = models.CharField(max_length=50)
+	resolution = models.CharField(max_length=10)
 	lastModified = models.DateTimeField()
 	content = JSONField()
 

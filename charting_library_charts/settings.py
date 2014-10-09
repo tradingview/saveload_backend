@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
-		'NAME': 'tradingview',
+		'NAME': 'charting_library_charts',
 		'USER': 'postgres',
 		'PASSWORD': '12345', ### Put your Postgres password here
 		'HOST': 'localhost',
