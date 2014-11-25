@@ -103,14 +103,14 @@ def saveChart(clientId, userId, chartName, symbol, resolution, content):
 	return response(json.dumps({'status': 'ok', 'id': newChart.id}))
 
 
-def rewriteChart(clientId, userId, chartId, chartName, symbol, resoluion, content):
+def rewriteChart(clientId, userId, chartId, chartName, symbol, resolution, content):
 	try:
 		chart = models.Chart.objects.get(ownerSource = clientId, ownerId = userId, id = chartId)
 		chart.lastModified = datetime.utcnow()
 		chart.content = content
 		chart.name = chartName
 		chart.symbol = symbol
-		chart.resoluion = resoluion
+		chart.resolution = resolution
 
 		chart.save()
 		return response(json.dumps({'status': 'ok'}))
