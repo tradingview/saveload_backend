@@ -67,7 +67,7 @@ def respondToOptionsRequest(requestHeaders):
 def getAllUserCharts(clientId, userId):
 	chartsList = models.Chart.objects.filter(ownerSource = clientId, ownerId = userId)
 	result = map(lambda x : {'id': x.id, 'name': x.name, 'timestamp': time.mktime(x.lastModified.timetuple()), 'symbol': x.symbol, 'resolution': x.resolution} , chartsList)
-	return response(json.dumps({'status': "ok", 'data': result}))
+	return response(json.dumps({'status': "ok", 'data': list(result)}))
 
 
 def getChartContent(clientId, userId, chartId):
