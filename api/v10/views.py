@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from charts import models
+from model import models
 import json
 from datetime import datetime
 import time

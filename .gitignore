@@ -2,3 +2,4 @@
 *.pyo
 *sublime*
 python_environment/*
+environment/*
