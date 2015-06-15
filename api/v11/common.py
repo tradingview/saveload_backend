@@ -1,3 +1,7 @@
+from django.http import HttpResponse
+import json
+
+
 def response(content):
 	result = HttpResponse(content)
 	result["Access-Control-Allow-Origin"] = "*"
@@ -5,13 +9,12 @@ def response(content):
 	return result
 
 
-
 def error(text):
 	return response(json.dumps({'status': 'error','message': text}))
 
 
 def respondToOptionsRequest(requestHeaders):
-	result = common.response(json.dumps({'status': "ok"}))
+	result = response(json.dumps({'status': "ok"}))
 	result["Access-Control-Allow-Headers"] = requestHeaders["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]
 	return result
 
@@ -20,15 +23,19 @@ def parseRequest(request):
 	clientId = request.GET.get('client', '')
 	userId = request.GET.get('user', '')
 
-	err = ''
+	err = None
+	response = None
 
 	if (clientId == ''):
 		err = error('Wrong client id')
-
-	if (userId == ''):
+	elif (userId == ''):
 		err = error('Wrong user id')
-
-	if request.method == 'OPTIONS':
+	elif request.method == 'OPTIONS':
 		response = respondToOptionsRequest(request.META)
 
-	return dict(error=err, response=response, clientId=clientId, iserId=userId)
+	return {
+		"error": err,
+		"response": response,
+		"clientId": clientId,
+		"userId": userId
+	}

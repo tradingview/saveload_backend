@@ -1,19 +1,24 @@
 from django.http import HttpResponse
-from model import models
 import json
-from datetime import datetime
 import time
-import common
+from datetime import datetime
+
+from model import models
+from api.v11 import common
 
 
 def processRequest(request):
 	parsedRequest = common.parseRequest(request)
 
-	if !(parsedRequest.error is None):
-		return parsedRequest.error
+	if parsedRequest['error'] is not None:
+		return parsedRequest['error']
 
-	clientId = parsedRequest.clientId
-	userId = parsedRequest.userId
+	if parsedRequest['response'] is not None:
+		return parsedRequest['response']
+
+
+	clientId = parsedRequest["clientId"]
+	userId = parsedRequest['userId']
 	chartId = request.GET.get('chart', '')
 
 

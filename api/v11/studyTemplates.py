@@ -1,46 +1,46 @@
 from django.http import HttpResponse
-from model import models
 import json
-from datetime import datetime
 import time
-from . import common
+from datetime import datetime
+
+from model import models
+from api.v11 import common
 
 
 def processRequest(request):
 	parsedRequest = common.parseRequest(request)
 
-	if !(parsedRequest.error is None):
-		return parsedRequest.error
+	if parsedRequest['error'] is not None:
+		return parsedRequest['error']
 
-	clientId = parsedRequest.clientId
-	userId = parsedRequest.userId
-	templateId = request.GET.get('template', '')
+	if parsedRequest['response'] is not None:
+		return parsedRequest['response']
+
+	clientId = parsedRequest["clientId"]
+	userId = parsedRequest['userId']
+	templateName = request.GET.get('template', '')
 
 
 	if request.method == 'GET':
-		if templateId == '':
+		if templateName == '':
 			return getAllTemplatesList(clientId, userId)
 		else:
-			return getTemplate(clientId, userId, templateId)
+			return getTemplate(clientId, userId, templateName)
 
 	elif request.method == 'DELETE':
-		if templateId == '':
+		if templateName == '':
 			return common.error('Wrong template id')
 		else:
-			return removeTemplate(clientId, userId, templateId)
+			return removeTemplate(clientId, userId, templateName)
 
 	elif request.method == 'POST':
-		chartName = request.POST.get('name')
-		symbol = request.POST.get('symbol')
-		resoluion = request.POST.get('resolution')
+		templateName = request.POST.get('name')
 		content = request.POST.get('content')
-		if templateId == '':
-			return saveChart(clientId, userId, chartName, symbol, resoluion, content)
-		else:
-			return rewriteChart(clientId, userId, templateId, chartName, symbol, resoluion, content)
+		return createTemplate(clientId, userId, templateName, content)
 
 	else:
 		return common.error('Wrong request')
+
 
 #-----------------------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------------------
@@ -83,9 +83,9 @@ def createTemplate(clientId, userId, name, content):
 	return common.response(json.dumps({'status': 'ok'}))
 
 
-def rewriteTemplate(clientId, userId, name, content):
+def rewriteTemplate(clientId, userId, templateId, name, content):
 	try:
-		chart = models.StudyTemplate.objects.get(ownerSource = clientId, ownerId = userId, id = chartId)
+		chart = models.StudyTemplate.objects.get(ownerSource = clientId, ownerId = userId, id = templateId)
 		chart.lastModified = datetime.utcnow()
 		chart.content = content
 		chart.name = chartName

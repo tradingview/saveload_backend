@@ -8,7 +8,7 @@ import datetime
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('charts', '0001_initial'),
+        ('model', '0001_initial'),
     ]
 
     operations = [

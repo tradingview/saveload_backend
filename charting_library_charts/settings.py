@@ -12,11 +12,11 @@ MANAGERS = ADMINS
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
-		'NAME': 'charting_library_charts',
+		'NAME': 'charting_library',
 		'USER': 'postgres',
-		'PASSWORD': '12345', ### Put your Postgres password here
+		'PASSWORD': 'postgres', ### Put your Postgres password here
 		'HOST': 'localhost',
-		'PORT': '5433',
+		'PORT': '5432',
 	}
 }
 
@@ -120,7 +120,7 @@ INSTALLED_APPS = (
 	# 'django.contrib.admin',
 	# Uncomment the next line to enable admin documentation:
 	# 'django.contrib.admindocs',
-	'charts',
+	'model',
 )
 
 # A sample logging configuration. The only tangible logging
