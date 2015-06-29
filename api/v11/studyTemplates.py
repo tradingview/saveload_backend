@@ -36,7 +36,7 @@ def processRequest(request):
 	elif request.method == 'POST':
 		templateName = request.POST.get('name')
 		content = request.POST.get('content')
-		return createTemplate(clientId, userId, templateName, content)
+		return createOrUpdateTemplate(clientId, userId, templateName, content)
 
 	else:
 		return common.error('Wrong request')
@@ -71,28 +71,10 @@ def removeTemplate(clientId, userId, name):
 		return common.error('StudyTemplate not found')
 
 
-def createTemplate(clientId, userId, name, content):
-	newItem = models.StudyTemplate(
-		ownerSource = clientId,
-		ownerId = userId,
-		name = name,
-		content = content
-	)
-
+def createOrUpdateTemplate(clientId, userId, name, content):
+	newItem, created = models.StudyTemplate.objects.get_or_create(ownerSource=clientId, ownerId=userId, name=name)
+	
+	newItem.content = content
 	newItem.save()
+
 	return common.response(json.dumps({'status': 'ok'}))
-
-
-def rewriteTemplate(clientId, userId, templateId, name, content):
-	try:
-		chart = models.StudyTemplate.objects.get(ownerSource = clientId, ownerId = userId, id = templateId)
-		chart.lastModified = datetime.utcnow()
-		chart.content = content
-		chart.name = chartName
-		chart.symbol = symbol
-		chart.resolution = resolution
-
-		chart.save()
-		return common.response(json.dumps({'status': 'ok'}))
-	except:
-		return common.error('StudyTemplate not found')
