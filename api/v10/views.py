@@ -94,7 +94,7 @@ def saveChart(clientId, userId, chartName, symbol, resolution, content):
 		ownerId = userId,
 		name = chartName,
 		content = content,
-		lastModified = datetime.utcnow(),
+		lastModified = datetime.now(),
 		symbol = symbol,
 		resolution = resolution
 	)
