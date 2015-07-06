@@ -15,7 +15,11 @@ def error(text):
 
 def respondToOptionsRequest(requestHeaders):
 	result = response(json.dumps({'status': "ok"}))
-	result["Access-Control-Allow-Headers"] = requestHeaders["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]
+	if "HTTP_ACCESS_CONTROL_REQUEST_HEADERS" in requestHeaders:
+		result["Access-Control-Allow-Headers"] = requestHeaders["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"]
+	else:
+		result["Access-Control-Allow-Headers"] = "*"
+	
 	return result
 
 
