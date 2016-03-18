@@ -95,7 +95,7 @@ def saveChart(clientId, userId, chartName, symbol, resolution, content):
 def rewriteChart(clientId, userId, chartId, chartName, symbol, resolution, content):
 	try:
 		chart = models.Chart.objects.get(ownerSource = clientId, ownerId = userId, id = chartId)
-		chart.lastModified = datetime.utcnow()
+		chart.lastModified = datetime.now()
 		chart.content = content
 		chart.name = chartName
 		chart.symbol = symbol
