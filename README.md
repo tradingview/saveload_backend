@@ -3,6 +3,10 @@ Charting Library Save/Load Backend
 
 This is the tiny backend implementing Charting Library charts storage.
 
+## Requirements
+Python 3x, pip, Django, Postgresql
+
+## How to start
 
 1. Install Python 3.x and Pip. Use virtual environment if your host has older python version and it cant be upgraded.
 2. Install PostgreSQL or some other Django-friendly database engine. Also you might want to install PgAdmin or any other administrative tool for your database.
