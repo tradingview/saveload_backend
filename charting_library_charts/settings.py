@@ -1,6 +1,6 @@
 # Django settings for charting_library_charts project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
