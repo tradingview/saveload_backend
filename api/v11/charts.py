@@ -37,12 +37,12 @@ def processRequest(request):
 	elif request.method == 'POST':
 		chartName = request.POST.get('name')
 		symbol = request.POST.get('symbol')
-		resoluion = request.POST.get('resolution')
+		resolution = request.POST.get('resolution')
 		content = request.POST.get('content')
 		if chartId == '':
-			return saveChart(clientId, userId, chartName, symbol, resoluion, content)
+			return saveChart(clientId, userId, chartName, symbol, resolution, content)
 		else:
-			return rewriteChart(clientId, userId, chartId, chartName, symbol, resoluion, content)
+			return rewriteChart(clientId, userId, chartId, chartName, symbol, resolution, content)
 
 	else:
 		return common.error('Wrong request')
