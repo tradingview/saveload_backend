@@ -9,6 +9,7 @@ def response(content):
 	result = HttpResponse(content)
 	result["Access-Control-Allow-Origin"] = "*"
 	result["Access-Control-Allow-Methods"] = "GET, POST, DELETE, OPTIONS"
+	result["Content-Type"] = "application/json"
 	return result
 
 
