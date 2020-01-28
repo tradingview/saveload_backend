@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('model', '0005_auto_20200128_1140'),
+        ('model', '0005_chart_indexes'),
     ]
 
     operations = [
