@@ -54,7 +54,7 @@ def processRequest(request):
 
 
 def getAllUserCharts(clientId, userId):
-	chartsList = models.Chart.objects.filter(ownerSource = clientId, ownerId = userId)
+	chartsList = models.Chart.objects.defer('content').filter(ownerSource = clientId, ownerId = userId)
 	result = map(lambda x : {'id': x.id, 'name': x.name, 'timestamp': time.mktime(x.lastModified.timetuple()), 'symbol': x.symbol, 'resolution': x.resolution} , chartsList)
 	return common.response(json.dumps({'status': "ok", 'data': list(result)}))
 
