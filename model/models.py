@@ -19,8 +19,8 @@ class Chart(models.Model):
 
 
 class StudyTemplate(models.Model):
-	ownerSource = models.CharField(max_length=200)
-	ownerId = models.CharField(max_length=200)
+	ownerSource = models.CharField(max_length=200, db_index=True)
+	ownerId = models.CharField(max_length=200, db_index=True)
 	name = models.CharField(max_length=200)
 	content = JSONField()
 
