@@ -48,7 +48,7 @@ def processRequest(request):
 
 
 def getAllTemplatesList(clientId, userId):
-	items = models.StudyTemplate.objects.filter(ownerSource = clientId, ownerId = userId)
+	items = models.StudyTemplate.objects.defer('content').filter(ownerSource = clientId, ownerId = userId)
 	result = map(lambda x : {'name': x.name} , items)
 	return common.response(json.dumps({'status': "ok", 'data': list(result)}))
 
@@ -73,7 +73,7 @@ def removeTemplate(clientId, userId, name):
 
 def createOrUpdateTemplate(clientId, userId, name, content):
 	newItem, created = models.StudyTemplate.objects.get_or_create(ownerSource=clientId, ownerId=userId, name=name)
-	
+
 	newItem.content = content
 	newItem.save()
 
