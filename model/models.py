@@ -3,8 +3,8 @@ from jsonfield import JSONField
 
 
 class Chart(models.Model):
-	ownerSource = models.CharField(max_length=200)
-	ownerId = models.CharField(max_length=200)
+	ownerSource = models.CharField(max_length=200, db_index=True)
+	ownerId = models.CharField(max_length=200, db_index=True)
 	name = models.CharField(max_length=200)
 	symbol = models.CharField(max_length=50)
 	resolution = models.CharField(max_length=10)
