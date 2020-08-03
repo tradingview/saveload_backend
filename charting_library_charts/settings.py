@@ -1,5 +1,7 @@
 # Django settings for charting_library_charts project.
 
+import os
+
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
