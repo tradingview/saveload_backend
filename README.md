@@ -8,6 +8,12 @@ Python 3x, pip, Django, Postgresql
 
 ## How to start
 
+We have a description of two different ways of starting a development server:
+- With a Python Local Installation
+- With a Docker environment
+
+Be free to choose that which satisfies your necessities.
+
 ### Python Local Instalation
 
 1. Install Python 3.x and Pip. Use virtual environment if your host has older python version and it cant be upgraded.
