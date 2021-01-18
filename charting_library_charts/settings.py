@@ -5,7 +5,7 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = ['localhost', '172.31.1.21', '10.3.14.109']
+ALLOWED_HOSTS = ['*']
 
 ADMINS = (
 	# ('Your Name', 'your_email@example.com'),
