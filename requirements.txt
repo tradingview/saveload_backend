@@ -2,3 +2,4 @@ Django==1.11.29
 psycopg2
 jsonfield==2.1.1
 gunicorn
+gevent
