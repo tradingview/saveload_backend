@@ -3,3 +3,5 @@
 *sublime*
 python_environment/*
 environment/*
+venv
+*.log
