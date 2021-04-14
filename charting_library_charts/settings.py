@@ -2,7 +2,7 @@
 
 import os
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ['*']
@@ -19,7 +19,7 @@ DATABASES = {
 		'NAME': os.getenv('DB_NAME', 'charting_library'),
 		'USER': os.getenv('DB_USER', 'postgres'),
 		'PASSWORD': os.getenv('DB_PASSWORD', 'postgres'),
-		'HOST': os.getenv('DB_HOST', 'localhost'),
+		'HOST': os.getenv('DB_HOST', 'db'),
 		'PORT': int(os.getenv('DB_PORT', '5432')),
 	}
 }
@@ -93,6 +93,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+  'corsheaders.middleware.CorsMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
@@ -103,6 +104,8 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'charting_library_charts.urls'
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'charting_library_charts.wsgi.application'
@@ -116,6 +119,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
+  'corsheaders',
 	#'django.contrib.sessions',
 	#'django.contrib.sites',
 	#'django.contrib.messages',

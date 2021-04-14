@@ -1,6 +1,6 @@
 from django.db import models
 from jsonfield import JSONField
-
+from django.utils import timezone
 
 class Chart(models.Model):
 	ownerSource = models.CharField(max_length=200, db_index=True)

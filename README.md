@@ -14,4 +14,3 @@ Python 3x, pip, Django, Postgresql
 4. Create an empty database in Postgres (using either command line or `pgadmin`). Go to `charting_library_charts` folder and set up your database connection in `settings.py` (see `DATABASES` @ line #12).
 5. Run `python manage.py migrate`. This will create database schema without any data.
 6. Run `python manage.py runserver` to run *TEST* instance of your database. Use some other stuff (i.e., Gunicorn) for your production environment.
-
