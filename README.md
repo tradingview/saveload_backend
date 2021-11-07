@@ -4,6 +4,7 @@ Charting Library Save/Load Backend
 This is the tiny backend implementing Charting Library charts storage.
 
 ## Requirements
+
 Python 3x, pip, Django, Postgresql
 
 ## How to start
@@ -15,3 +16,6 @@ Python 3x, pip, Django, Postgresql
 5. Run `python manage.py migrate`. This will create database schema without any data.
 6. Run `python manage.py runserver` to run *TEST* instance of your database. Use some other stuff (i.e., Gunicorn) for your production environment.
 
+## Reference
+
+ [charting_library_wiki > Saving-and-Loading-Charts](https://github.com/trunknx/charting_library_wiki/wiki/Saving-and-Loading-Charts)
