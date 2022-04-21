@@ -1,5 +1,6 @@
 *.pyc
 *.pyo
 *sublime*
+*\.vscode*
 python_environment/*
 environment/*
