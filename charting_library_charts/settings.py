@@ -141,11 +141,18 @@ LOGGING = {
 		}
 	},
 	'handlers': {
+		'console': {
+			'class': 'logging.StreamHandler'
+		},
 		'mail_admins': {
 			'level': 'ERROR',
 			'filters': ['require_debug_false'],
 			'class': 'django.utils.log.AdminEmailHandler'
 		}
+	},
+	'root': {
+		'handlers': ['console'],
+		'level': 'WARNING',
 	},
 	'loggers': {
 		'django.request': {
