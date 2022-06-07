@@ -1,8 +1,9 @@
 from django.db import models
+from django_prometheus.models import ExportModelOperationsMixin
 from jsonfield import JSONField
 
 
-class Chart(models.Model):
+class Chart(ExportModelOperationsMixin('charts'), models.Model):
 	ownerSource = models.CharField(max_length=200, db_index=True)
 	ownerId = models.CharField(max_length=200, db_index=True)
 	name = models.CharField(max_length=200)
@@ -18,7 +19,7 @@ class Chart(models.Model):
 		self.content = _content
 
 
-class StudyTemplate(models.Model):
+class StudyTemplate(ExportModelOperationsMixin('study_template'), models.Model):
 	ownerSource = models.CharField(max_length=200, db_index=True)
 	ownerId = models.CharField(max_length=200, db_index=True)
 	name = models.CharField(max_length=200)
@@ -30,7 +31,8 @@ class StudyTemplate(models.Model):
 	def setContent(self, _content):
 		self.content = _content
 
-class DrawingTemplate(models.Model):
+
+class DrawingTemplate(ExportModelOperationsMixin('drawing_template'), models.Model):
 	ownerSource = models.CharField(max_length=200, db_index=True)
 	ownerId = models.CharField(max_length=200, db_index=True)
 	name = models.CharField(max_length=200)

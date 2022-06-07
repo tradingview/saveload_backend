@@ -102,6 +102,11 @@ MIDDLEWARE_CLASSES = (
 	# 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+MIDDLEWARE = (
+	'django_prometheus.middleware.PrometheusBeforeMiddleware',
+	'django_prometheus.middleware.PrometheusAfterMiddleware',
+)
+
 ROOT_URLCONF = 'charting_library_charts.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -125,6 +130,7 @@ INSTALLED_APPS = (
 	# Uncomment the next line to enable admin documentation:
 	# 'django.contrib.admindocs',
 	'model',
+	'django_prometheus',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -140,9 +146,16 @@ LOGGING = {
 			'()': 'django.utils.log.RequireDebugFalse'
 		}
 	},
+	'formatters': {
+		'verbose': {
+			'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+			'datefmt': "%d/%b/%Y %H:%M:%S"
+		}
+	},
 	'handlers': {
 		'console': {
-			'class': 'logging.StreamHandler'
+			'class': 'logging.StreamHandler',
+			'formatter': 'verbose'
 		},
 		'mail_admins': {
 			'level': 'ERROR',
@@ -160,5 +173,10 @@ LOGGING = {
 			'level': 'ERROR',
 			'propagate': True,
 		},
+		'py.warnings': {
+			'handlers': ['console'],
+			'level': 'WARNING',
+			'propagate': True,
+		}
 	}
 }
