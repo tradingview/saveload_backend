@@ -1,4 +1,4 @@
-Django==2.2.28
+Django==3.2.24
 psycopg2<2.9
 jsonfield==2.1.1
 django-prometheus==2.2.0
