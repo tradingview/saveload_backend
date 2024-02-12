@@ -1,0 +1,28 @@
+services:
+  saveload:
+    image: 643578112146.dkr.ecr.eu-west-1.amazonaws.com/crypticorn-trading-platform:saveload-service-main
+    build:
+      context: .
+    networks:
+      - backnet
+    environment:
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: saveload-db
+      DB_PORT: 5432
+      SECRET_KEY: ${SECRET_KEY}
+    ports:
+      - "8001:8001"
+  saveload-db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5435:5432"
+    networks:
+      - backnet
+networks:
+  backnet:

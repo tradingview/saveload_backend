@@ -4,6 +4,7 @@ from jsonfield import JSONField
 
 
 class Chart(ExportModelOperationsMixin('charts'), models.Model):
+	id = models.BigAutoField(primary_key=True)
 	ownerSource = models.CharField(max_length=200, db_index=True)
 	ownerId = models.CharField(max_length=200, db_index=True)
 	name = models.CharField(max_length=200)
@@ -20,6 +21,7 @@ class Chart(ExportModelOperationsMixin('charts'), models.Model):
 
 
 class StudyTemplate(ExportModelOperationsMixin('study_template'), models.Model):
+	id = models.BigAutoField(primary_key=True)
 	ownerSource = models.CharField(max_length=200, db_index=True)
 	ownerId = models.CharField(max_length=200, db_index=True)
 	name = models.CharField(max_length=200)
@@ -33,6 +35,7 @@ class StudyTemplate(ExportModelOperationsMixin('study_template'), models.Model):
 
 
 class DrawingTemplate(ExportModelOperationsMixin('drawing_template'), models.Model):
+	id = models.BigAutoField(primary_key=True)
 	ownerSource = models.CharField(max_length=200, db_index=True)
 	ownerId = models.CharField(max_length=200, db_index=True)
 	name = models.CharField(max_length=200)
