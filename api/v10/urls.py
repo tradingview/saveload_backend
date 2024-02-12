@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import re_path
 from . import views
 from django.views.decorators.csrf import csrf_exempt
 
@@ -9,5 +9,5 @@ from django.views.decorators.csrf import csrf_exempt
 #POST 	charts?userid=0&clientid=1
 
 urlpatterns = [
-	url(r'^charts$', csrf_exempt(views.doTheMagic)),
+	re_path(r'^charts$', csrf_exempt(views.doTheMagic)),
 ]

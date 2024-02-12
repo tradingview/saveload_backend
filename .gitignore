@@ -4,3 +4,4 @@
 *\.vscode*
 python_environment/*
 environment/*
+.env
