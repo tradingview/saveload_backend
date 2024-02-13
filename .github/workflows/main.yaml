@@ -12,6 +12,7 @@ env:
   SERVICE_NAME: saveload-service
   EC2_HOST: ${{ secrets.EC2_HOST }}
   EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+  DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
 jobs:
   build:
     runs-on: ubuntu-latest
