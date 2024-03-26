@@ -50,7 +50,8 @@ def getTemplates(clientId, userId, tool):
 	try:
 		items = models.DrawingTemplate.objects.defer('content').filter(ownerSource = clientId, ownerId = userId, tool = tool)
 		result = map(lambda x : x.name, items)
-		return common.response(json.dumps({'status': "ok", 'data': list(result)}))
+		resultFiltered = list(filter(str.strip, result))
+		return common.response(json.dumps({'status': "ok", 'data': list(resultFiltered)}))
 	except:
 		return common.error('Error loading Drawing Templates')
 
