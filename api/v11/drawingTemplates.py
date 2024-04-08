@@ -75,6 +75,9 @@ def removeTemplate(clientId, userId, tool, name):
 
 
 def createOrUpdateTemplate(clientId, userId, name, tool, content):
+	if not content
+		return common.error('No content to save')
+
 	try:
 		newItem, created = models.DrawingTemplate.objects.get_or_create(ownerSource=clientId, ownerId=userId, name=name, tool=tool)
 		newItem.content = content
