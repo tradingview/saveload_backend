@@ -32,10 +32,7 @@ def processRequest(request):
 		return createOrUpdateTemplate(clientId, userId, name, tool, content)
 
 	elif request.method == 'DELETE':
-		if name == '':
-			return common.error('Wrong template id')
-		else:
-			return removeTemplate(clientId, userId, tool, name)
+		return removeTemplate(clientId, userId, tool, name)
 
 	else:
 		return common.error('Wrong request')
@@ -74,6 +71,12 @@ def removeTemplate(clientId, userId, tool, name):
 
 
 def createOrUpdateTemplate(clientId, userId, name, tool, content):
+	if not content
+		return common.error('No content to save')
+
+	if not name
+		return common.error('Name of template should not be empty')
+
 	try:
 		newItem, created = models.DrawingTemplate.objects.get_or_create(ownerSource=clientId, ownerId=userId, name=name, tool=tool)
 		newItem.content = content

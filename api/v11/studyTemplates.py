@@ -28,10 +28,7 @@ def processRequest(request):
 			return getTemplate(clientId, userId, templateName)
 
 	elif request.method == 'DELETE':
-		if templateName == '':
-			return common.error('Wrong template id')
-		else:
-			return removeTemplate(clientId, userId, templateName)
+		return removeTemplate(clientId, userId, templateName)
 
 	elif request.method == 'POST':
 		templateName = request.POST.get('name')
@@ -72,9 +69,18 @@ def removeTemplate(clientId, userId, name):
 
 
 def createOrUpdateTemplate(clientId, userId, name, content):
-	newItem, created = models.StudyTemplate.objects.get_or_create(ownerSource=clientId, ownerId=userId, name=name)
+	if not content
+		return common.error('No content to save')
 
-	newItem.content = content
-	newItem.save()
+	if not name
+		return common.error('Name of template should not be empty')
 
-	return common.response(json.dumps({'status': 'ok'}))
+	try:
+		newItem, created = models.StudyTemplate.objects.get_or_create(ownerSource=clientId, ownerId=userId, name=name)
+
+		newItem.content = content
+		newItem.save()
+
+		return common.response(json.dumps({'status': 'ok'}))
+	except:
+		return common.error('Error updating Study Template')
