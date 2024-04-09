@@ -72,9 +72,15 @@ def removeTemplate(clientId, userId, name):
 
 
 def createOrUpdateTemplate(clientId, userId, name, content):
-	newItem, created = models.StudyTemplate.objects.get_or_create(ownerSource=clientId, ownerId=userId, name=name)
+	if not content
+		return common.error('No content to save')
 
-	newItem.content = content
-	newItem.save()
+	try:
+		newItem, created = models.StudyTemplate.objects.get_or_create(ownerSource=clientId, ownerId=userId, name=name)
 
-	return common.response(json.dumps({'status': 'ok'}))
+		newItem.content = content
+		newItem.save()
+
+		return common.response(json.dumps({'status': 'ok'}))
+	except:
+		return common.error('Error updating Study Template')
