@@ -28,10 +28,7 @@ def processRequest(request):
 			return getTemplate(clientId, userId, templateName)
 
 	elif request.method == 'DELETE':
-		if templateName == '':
-			return common.error('Wrong template id')
-		else:
-			return removeTemplate(clientId, userId, templateName)
+		return removeTemplate(clientId, userId, templateName)
 
 	elif request.method == 'POST':
 		templateName = request.POST.get('name')
@@ -74,6 +71,9 @@ def removeTemplate(clientId, userId, name):
 def createOrUpdateTemplate(clientId, userId, name, content):
 	if not content
 		return common.error('No content to save')
+
+	if not name
+		return common.error('Name of template should not be empty')
 
 	try:
 		newItem, created = models.StudyTemplate.objects.get_or_create(ownerSource=clientId, ownerId=userId, name=name)

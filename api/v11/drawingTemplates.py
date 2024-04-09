@@ -32,10 +32,7 @@ def processRequest(request):
 		return createOrUpdateTemplate(clientId, userId, name, tool, content)
 
 	elif request.method == 'DELETE':
-		if name == '':
-			return common.error('Wrong template id')
-		else:
-			return removeTemplate(clientId, userId, tool, name)
+		return removeTemplate(clientId, userId, tool, name)
 
 	else:
 		return common.error('Wrong request')
@@ -50,8 +47,7 @@ def getTemplates(clientId, userId, tool):
 	try:
 		items = models.DrawingTemplate.objects.defer('content').filter(ownerSource = clientId, ownerId = userId, tool = tool)
 		result = map(lambda x : x.name, items)
-		resultFiltered = list(filter(str.strip, result))
-		return common.response(json.dumps({'status': "ok", 'data': list(resultFiltered)}))
+		return common.response(json.dumps({'status': "ok", 'data': list(result)}))
 	except:
 		return common.error('Error loading Drawing Templates')
 
@@ -77,6 +73,9 @@ def removeTemplate(clientId, userId, tool, name):
 def createOrUpdateTemplate(clientId, userId, name, tool, content):
 	if not content
 		return common.error('No content to save')
+
+	if not name
+		return common.error('Name of template should not be empty')
 
 	try:
 		newItem, created = models.DrawingTemplate.objects.get_or_create(ownerSource=clientId, ownerId=userId, name=name, tool=tool)
