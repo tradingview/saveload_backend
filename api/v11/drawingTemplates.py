@@ -71,10 +71,10 @@ def removeTemplate(clientId, userId, tool, name):
 
 
 def createOrUpdateTemplate(clientId, userId, name, tool, content):
-	if not content
+	if not content:
 		return common.error('No content to save')
 
-	if not name
+	if not name:
 		return common.error('Name of template should not be empty')
 
 	try:
