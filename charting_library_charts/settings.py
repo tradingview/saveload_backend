@@ -21,6 +21,9 @@ DATABASES = {
 		'PASSWORD': os.getenv('DB_PASSWORD', 'postgres'),
 		'HOST': os.getenv('DB_HOST', 'localhost'),
 		'PORT': int(os.getenv('DB_PORT', '5432')),
+		'OPTIONS': {
+            'options': '-c timezone=UTC',
+        },
 	}
 }
 

@@ -1,6 +1,6 @@
 from django.db import models
 from django_prometheus.models import ExportModelOperationsMixin
-from jsonfield import JSONField
+from django.db.models import JSONField
 
 
 class Chart(ExportModelOperationsMixin('charts'), models.Model):
