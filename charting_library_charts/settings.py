@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
 	'default': {
-		'ENGINE': 'django.db.backends.postgresql_psycopg2',
+		'ENGINE': 'django.db.backends.postgresql',
 		'NAME': os.getenv('DB_NAME', 'charting_library'),
 		'USER': os.getenv('DB_USER', 'postgres'),
 		'PASSWORD': os.getenv('DB_PASSWORD', 'postgres'),
@@ -115,6 +115,9 @@ MIDDLEWARE = (
 )
 
 ROOT_URLCONF = 'charting_library_charts.urls'
+
+# Keep 32-bit integer primary keys, matching the existing database schema.
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'charting_library_charts.wsgi.application'
