@@ -31,7 +31,7 @@ Python 3.10 or later, pip, Django, PostgreSQL
 1. Clone the repository to your host machine.
 2. Install Python 3.10 or later and pip. Use a virtual environment if your host has an older Python version that cannot be upgraded.
 3. Install PostgreSQL or any other Django-friendly database engine. You can also install pgAdmin or any other administrative tool for your database.
-4. Go to your chart storage folder and install the required dependencies: `pip install -r requirements.txt`. For Unix users: you should have the python-dev package to install `psycopg2`.
+4. Go to your chart storage folder and install the required dependencies: `pip install -r requirements.txt`. The `psycopg[binary]` PostgreSQL driver ships prebuilt, so no compiler is needed. For production, consider `psycopg[c]` instead, which uses your system's `libpq` and its security updates (see the [psycopg installation guide]).
 5. Create an empty database in PostgreSQL using either the command line or pgAdmin.
 6. Configure your database connection in `charting_library_charts/settings.py` (see `DATABASES` at [line 16]).
 7. Generate a secret key by running `python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'`.
@@ -46,5 +46,6 @@ Python 3.10 or later, pip, Django, PostgreSQL
 [drawing templates]: https://www.tradingview.com/charting-library-docs/latest/saving_loading/#drawing-templates
 [indicator templates]: https://www.tradingview.com/charting-library-docs/latest/saving_loading/#indicator-templates
 [line 16]: https://github.com/tradingview/saveload_backend/blob/master/charting_library_charts/settings.py#L16
+[psycopg installation guide]: https://www.psycopg.org/psycopg3/docs/basic/install.html
 [Saving and loading charts]: https://www.tradingview.com/charting-library-docs/latest/saving_loading/
 [Widget Constructor]: https://www.tradingview.com/charting-library-docs/latest/core_concepts/Widget-Constructor/
