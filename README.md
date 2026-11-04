@@ -5,6 +5,23 @@ This is a backend implementing a chart storage with Python and PostgreSQL.
 You can run this storage on your server to process users' saved data such as [chart layouts], [drawing templates], and [indicator templates].
 For more information, refer to the [Saving and loading charts] section of the Advanced Charts documentation.
 
+## Security notice
+
+This backend is a **reference implementation** and has **no authentication or authorization**.
+Data is scoped only by the `client` and `user` query parameters, which are supplied by the caller.
+Anyone who knows or guesses a `client`/`user` pair can read, overwrite, or delete that data.
+
+Before using it in production, you must:
+
+- Put it behind your own authentication (for example, a reverse proxy that validates a session or token) and derive or verify `user` server-side instead of trusting the query parameter.
+- Restrict `Access-Control-Allow-Origin` to your own domains (it is `*` by default, see `api/v11/common.py`).
+- Set `SECRET_KEY` and `ALLOWED_HOSTS`, and serve the storage over HTTPS with a production WSGI server.
+- Avoid exposing the Prometheus `/metrics` endpoint publicly.
+
+**Demo server:** `https://saveload.tradingview.com`, used in our examples, is a public demo for testing only.
+Anything saved there can be read, modified, or deleted by anyone, and may be wiped at any time.
+Do not use it in production.
+
 ## Requirements
 
 Python 3x, pip, Django, PostgreSQL
@@ -17,11 +34,11 @@ Python 3x, pip, Django, PostgreSQL
 4. Go to your chart storage folder and install the required dependencies: `pip install -r requirements.txt`. For Unix users: you should have the python-dev package to install `psycopg2`.
 5. Create an empty database in PostgreSQL using either the command line or pgAdmin.
 6. Configure your database connection in `charting_library_charts/settings.py` (see `DATABASES` at [line 16]).
-7. Run `python manage.py migrate` to create the database schema without any data.
-8. Generate a secret key by running `python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'`.
-9. Set your secret key to your environment variables `export SECRET_KEY='...'`.
+7. Generate a secret key by running `python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'`.
+8. Set your secret key to your environment variables `export SECRET_KEY='...'`. This is required: the storage does not start without it.
+9. Run `python manage.py migrate` to create the database schema without any data.
 10. Start a test instance of your database by running `python manage.py runserver`. Note that for production environments, you should avoid using `runserver` and instead use a suitable WSGI (Web Server Gateway Interface) server like Gunicorn.
-11. Set [`charts_storage_url`] in the [Widget Constructor] to the URL of your chart storage. Additionally, ensure to set [`client_id` and `user_id`].
+11. Set [`charts_storage_url`] in the [Widget Constructor] to the URL of your chart storage. Additionally, ensure to set [`client_id` and `user_id`]. Note that these values only partition data; they do not secure it (see [Security notice](#security-notice)).
 
 [chart layouts]: https://www.tradingview.com/charting-library-docs/latest/saving_loading/#chart-layouts
 [`charts_storage_url`]: https://www.tradingview.com/charting-library-docs/latest/api/interfaces/Charting_Library.ChartingLibraryWidgetOptions/#charts_storage_url

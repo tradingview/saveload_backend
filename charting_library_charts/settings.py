@@ -83,7 +83,14 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = os.getenv('SECRET_KEY', 'c5-%u0l1*(dj@u33!5*o_gtti0)kkh$m%i#@!(!$d%779kaa&amp;b')
+# There is intentionally no default value: set the SECRET_KEY environment variable (see README).
+SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY:
+	from django.core.exceptions import ImproperlyConfigured
+	raise ImproperlyConfigured(
+		'The SECRET_KEY environment variable is not set. Generate one with: '
+		'python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"'
+	)
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
