@@ -1,7 +1,5 @@
 from django.http import HttpResponse
 import json
-import time
-from datetime import datetime
 
 from model import models
 from api.v11 import common

@@ -1,7 +1,6 @@
 from django.http import HttpResponse
+from django.utils import timezone
 import json
-import time
-from datetime import datetime
 
 from model import models
 from api.v11 import common
@@ -55,14 +54,14 @@ def processRequest(request):
 
 def getAllUserCharts(clientId, userId):
 	chartsList = models.Chart.objects.defer('content').filter(ownerSource = clientId, ownerId = userId)
-	result = map(lambda x : {'id': x.id, 'name': x.name, 'timestamp': time.mktime(x.lastModified.timetuple()), 'symbol': x.symbol, 'resolution': x.resolution} , chartsList)
+	result = map(lambda x : {'id': x.id, 'name': x.name, 'timestamp': float(int(x.lastModified.timestamp())), 'symbol': x.symbol, 'resolution': x.resolution} , chartsList)
 	return common.response(json.dumps({'status': "ok", 'data': list(result)}))
 
 
 def getChartContent(clientId, userId, chartId):
 	try:
 		chart = models.Chart.objects.get(ownerSource = clientId, ownerId = userId, id = chartId)
-		result = json.dumps({'status': 'ok', 'data': { 'id': chart.id, 'name': chart.name, 'timestamp': time.mktime(chart.lastModified.timetuple()), 'content': chart.content}})
+		result = json.dumps({'status': 'ok', 'data': { 'id': chart.id, 'name': chart.name, 'timestamp': float(int(chart.lastModified.timestamp())), 'content': chart.content}})
 		return common.response(result)
 	except:
 		return common.error('Chart not found')
@@ -83,7 +82,7 @@ def saveChart(clientId, userId, chartName, symbol, resolution, content):
 		ownerId = userId,
 		name = chartName,
 		content = content,
-		lastModified = datetime.now(),
+		lastModified = timezone.now(),
 		symbol = symbol,
 		resolution = resolution
 	)
@@ -95,7 +94,7 @@ def saveChart(clientId, userId, chartName, symbol, resolution, content):
 def rewriteChart(clientId, userId, chartId, chartName, symbol, resolution, content):
 	try:
 		chart = models.Chart.objects.get(ownerSource = clientId, ownerId = userId, id = chartId)
-		chart.lastModified = datetime.now()
+		chart.lastModified = timezone.now()
 		chart.content = content
 		chart.name = chartName
 		chart.symbol = symbol
