@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
 	'default': {
-		'ENGINE': 'django.db.backends.postgresql_psycopg2',
+		'ENGINE': 'django.db.backends.postgresql',
 		'NAME': os.getenv('DB_NAME', 'charting_library'),
 		'USER': os.getenv('DB_USER', 'postgres'),
 		'PASSWORD': os.getenv('DB_PASSWORD', 'postgres'),
@@ -83,7 +83,14 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = os.getenv('SECRET_KEY', 'c5-%u0l1*(dj@u33!5*o_gtti0)kkh$m%i#@!(!$d%779kaa&amp;b')
+# There is intentionally no default value: set the SECRET_KEY environment variable (see README).
+SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY:
+	from django.core.exceptions import ImproperlyConfigured
+	raise ImproperlyConfigured(
+		'The SECRET_KEY environment variable is not set. Generate one with: '
+		'python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"'
+	)
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -108,6 +115,9 @@ MIDDLEWARE = (
 )
 
 ROOT_URLCONF = 'charting_library_charts.urls'
+
+# Keep 32-bit integer primary keys, matching the existing database schema.
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'charting_library_charts.wsgi.application'
